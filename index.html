@@ -2,143 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SCAD: The Hidden Heart Attack</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SCAD Data Storytelling</title>
 
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="script.js"></script>
+
+
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body style="font-family: 'Inter', sans-serif;">
 
-  <!-- HERO SECTION -->
+  <!-- Hero Section -->
   <header class="vh-100 bg-danger text-white d-flex align-items-center">
     <div class="container text-center">
-      <h1 id="heroTitle" class="display-3 fw-bold">
-        <span class="fractured-word"><span class="top">Hidden</span><span class="bottom">Hidden</span></span>
-        <span class="fractured-word"><span class="top">Heart</span><span class="bottom">Heart</span></span>
-        <span class="fractured-word"><span class="top">Attack</span><span class="bottom">Attack</span></span>
-        <br>
-        <span id="restOfTitle">Killing Young Women</span>
-      </h1>
-      <p id="heroSub" class="lead mt-4">90% of patients are women — but most have never heard of it.</p>
+      <h1 class="display-3 fw-bold">Hidden Heart Attack<br>Killing Young Women</h1>
+      <p class="lead mt-4">90% of patients are women — but most have never heard of it.</p>
     </div>
   </header>
 
-  <!-- WHAT IS SCAD -->
+  <!-- Content Section -->
   <section class="py-5 bg-light">
     <div class="container">
-      <h2 class="display-5 text-danger fw-bold mb-4">What is SCAD?</h2>
-      <p class="fs-5">
-        Spontaneous Coronary Artery Dissection is a tear inside a coronary artery wall that causes heart attack. It’s not caused by plaque buildup.
-        It most often affects healthy, young women — and is frequently misdiagnosed or missed entirely.
-      </p>
+      <h2 class="text-danger fw-bold mb-4">What is SCAD?</h2>
+      <p>Spontaneous Coronary Artery Dissection is a tear inside a coronary artery wall that causes heart attack. It’s not caused by plaque buildup. It most often affects healthy, young women — and is frequently misdiagnosed or missed entirely.</p>
     </div>
   </section>
 
-  <!-- WHO DOES SCAD AFFECT -->
+  <!-- Chart Section -->
   <section class="py-5">
-    <div class="container">
-      <h2 class="display-5 text-danger fw-bold mb-4">Who Does SCAD Affect?</h2>
-      <div class="row text-center g-4">
-        <div class="col-md-4">
-          <h3 class="display-6 fw-bold">90%</h3>
-          <p class="lead">of SCAD patients are women</p>
-        </div>
-        <div class="col-md-4">
-          <h3 class="display-6 fw-bold">35%</h3>
-          <p class="lead">of heart attacks in women under 50 are caused by SCAD</p>
-        </div>
-        <div class="col-md-4">
-          <h3 class="display-6 fw-bold">Under 60</h3>
-          <p class="lead">SCAD is a leading cause of ACS in women under 60</p>
-        </div>
-      </div>
+    <div class="container text-center">
+      <h2 class="text-danger fw-bold mb-4">SCAD by Gender</h2>
+      <canvas id="genderChart" width="300" height="300"></canvas>
+      
     </div>
   </section>
 
-  <!-- SCAD BY GENDER (CHART) -->
-  <section class="py-5 bg-light">
-    <div class="container">
-      <h2 class="display-5 text-danger fw-bold mb-4">SCAD by Gender</h2>
-      <p class="fs-5">SCAD overwhelmingly affects women — but public awareness and medical education often lag behind the data.</p>
-      <div id="genderChartWrapper" class="d-flex justify-content-center">
-        <canvas id="genderChart" width="300" height="300"></canvas>
-      </div>
-    </div>
-  </section>
-
-  <!-- MISDIAGNOSIS -->
-  <section class="py-5">
-    <div class="container">
-      <h2 class="display-5 text-danger fw-bold mb-4">Frequently Dismissed</h2>
-      <p class="fs-5">Many SCAD patients are young women with no obvious risk factors. Their symptoms are often dismissed as anxiety or indigestion — leading to dangerous delays in treatment.</p>
-    </div>
-  </section>
-
-  <!-- TRIGGERS -->
-  <section class="py-5 bg-light">
-    <div class="container">
-      <h2 class="display-5 text-danger fw-bold mb-4">Common Triggers</h2>
-      <ul class="fs-5">
-        <li>Extreme emotional stress</li>
-        <li>Hormonal changes (e.g., post-partum)</li>
-        <li>Intense physical exertion</li>
-        <li>Underlying arteriopathies (e.g., FMD)</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- TREATMENT CHALLENGES -->
-  <section class="py-5">
-    <div class="container">
-      <h2 class="display-5 text-danger fw-bold mb-4">Treatment Isn’t Always Clear</h2>
-      <p class="fs-5">Standard heart attack interventions (like stents) may fail or worsen outcomes in SCAD. Many patients benefit more from conservative, non-invasive management — but many doctors aren’t trained to recognize this.</p>
-    </div>
-  </section>
-
-  <!-- RESEARCH GAP -->
-  <section class="py-5 bg-light">
-    <div class="container">
-      <h2 class="display-5 text-danger fw-bold mb-4">Underfunded. Understudied.</h2>
-      <p class="fs-5">SCAD is underrepresented in cardiovascular research. Most large trials exclude women and younger patients, creating gaps in care, policy, and understanding.</p>
-    </div>
-  </section>
-
-  <!-- CALL TO ACTION -->
-  <section class="py-5 bg-danger text-white text-center">
-    <div class="container">
-      <h2 class="display-4 fw-bold">Help Raise Awareness</h2>
-      <p class="lead mt-3">Share this story. Donate to research. Advocate for equitable care.</p>
-      <div class="mt-4">
-        <a href="#" class="btn btn-light btn-lg me-2">Donate</a>
-        <a href="#" class="btn btn-outline-light btn-lg">Learn More</a>
-      </div>
-      <p class="mt-5 small">#WIHDN #WIHDNDataStorytellingChallenge #WIHDNWaitingTime</p>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="bg-dark text-white text-center py-3">
-    <p class="mb-0">
-      Source: Hayes et al. (2018), AHA Scientific Statement — 
-      <a class="text-warning" href="https://doi.org/10.1161/CIR.0000000000000564" target="_blank">View Study</a>
-    </p>
-  </footer>
-
-  <!-- JS LIBRARIES -->
+  <!-- JS Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-
-  <!-- CUSTOM JS -->
   <script src="script.js"></script>
 </body>
 </html>

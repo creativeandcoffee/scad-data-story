@@ -1,103 +1,45 @@
-// Register GSAP plugin
-gsap.registerPlugin(ScrollTrigger);
+document.addEventListener("DOMContentLoaded", () => {
+  // GSAP fade in hero text and subtitle
+  gsap.from("header h1", {
+    opacity: 0,
+    y: 50,
+    duration: 1,
+    ease: "power2.out"
+  });
 
-///////////////////////////////
-// 1. FRACTURE TEXT ANIMATION
-///////////////////////////////
+  gsap.from("header p", {
+    opacity: 0,
+    y: 30,
+    duration: 1,
+    delay: 0.5,
+    ease: "power2.out"
+  });
 
-ScrollTrigger.create({
-  trigger: "#heroTitle",
-  start: "top 70%",
-  once: true,
-  onEnter: () => {
-    // Top half rise
-    gsap.fromTo(".fractured-word .top", {
-      y: 0
-    }, {
-      y: -20,
-      rotation: -4,
-      opacity: 0.85,
-      duration: 0.4,
-      ease: "power1.inOut",
-      yoyo: true,
-      repeat: 1,
-      stagger: 0.05
-    });
+  // Chart.js pie chart on #genderChart
+  const ctx = document.getElementById("genderChart").getContext("2d");
 
-    // Bottom half fall
-    gsap.fromTo(".fractured-word .bottom", {
-      y: 0
-    }, {
-      y: 20,
-      rotation: 4,
-      opacity: 0.85,
-      duration: 0.4,
-      ease: "power1.inOut",
-      yoyo: true,
-      repeat: 1,
-      stagger: 0.05
-    });
-
-    // Fade in rest of title
-    gsap.from("#restOfTitle", {
-      opacity: 0,
-      y: 30,
-      delay: 0.4,
-      duration: 1,
-      ease: "power3.out"
-    });
-
-    // Fade in subtitle
-    gsap.from("#heroSub", {
-      opacity: 0,
-      y: 20,
-      delay: 0.6,
-      duration: 1,
-      ease: "power3.out"
-    });
-  }
-});
-
-//////////////////////////////////
-// 2. CHART.JS - SCAD by Gender
-//////////////////////////////////
-
-let chartRendered = false;
-
-ScrollTrigger.create({
-  trigger: "#genderChart",
-  start: "top 80%",
-  once: true,
-  onEnter: () => {
-    if (chartRendered) return;
-
-    const ctx = document.getElementById("genderChart").getContext("2d");
-
-    new Chart(ctx, {
-      type: "doughnut",
-      data: {
-        labels: ["Women (90%)", "Men (10%)"],
-        datasets: [{
-          data: [90, 10],
-          backgroundColor: ["#dc3545", "#f8d7da"],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        cutout: "60%",
-        plugins: {
-          legend: {
-            display: true,
-            position: "bottom"
-          }
-        },
-        animation: {
-          duration: 1200,
-          easing: "easeOutBounce"
+  new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: ["Women (90%)", "Men (10%)"],
+      datasets: [{
+        data: [90, 10],
+        backgroundColor: ["#dc3545", "#f8d7da"],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      cutout: "60%",
+      plugins: {
+        legend: {
+          display: true,
+          position: "bottom"
         }
+      },
+      animation: {
+        duration: 1000,
+        easing: "easeOutBounce"
       }
-    });
-
-    chartRendered = true;
-  }
+    }
+  });
 });

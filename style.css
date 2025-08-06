@@ -1,90 +1,24 @@
-
-
-.hero {
-  height: 100vh;
-  background: #8B0000;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-}
-
-.hero h1 {
-  font-size: 3.5rem;
-  font-weight: 900;
-  margin-bottom: 1rem;
-}
-
-.hero p {
-  font-size: 1.25rem;
-  max-width: 600px;
-  margin: 0 auto 1.5rem;
-}
-
-.stat {
-  font-size: 1.75rem;
-  font-weight: bold;
-  color: #FFD1DC;
-}
-.section {
-  padding: 100px 20px;
-  max-width: 900px;
-  margin: auto;
-}
-
-.section h2 {
-  font-size: 2.25rem;
-  color: #8B0000;
-  margin-bottom: 1rem;
-}
-
-.section p {
-  font-size: 1.125rem;
-  line-height: 1.6;
-}
-
-section {
-  background-color: #fff;
-}
-
-.row h3 {
-  color: #8B0000;
-}
-
-.fracture-word {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(20px) scale(0.95);
-}
-
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #fff;
+  background: #fff;
   color: #000;
 }
 
-.fractured-word {
-  position: relative;
-  display: inline-block;
-  margin-right: 0.4em;
-  font-weight: bold;
+header {
+  background-color: #8B0000;
+  color: white;
 }
 
-.fractured-word .top,
-.fractured-word .bottom {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  pointer-events: none;
+h1 {
+  font-weight: 900;
 }
 
-.fractured-word .top {
-  clip-path: inset(0 0 50% 0);
+h2 {
+  color: #8B0000;
+  font-weight: 700;
 }
 
-.fractured-word .bottom {
-  clip-path: inset(50% 0 0 0);
+canvas {
+  margin-top: 1rem;
+  max-width: 100%;
 }
