@@ -96,7 +96,11 @@
         <!-- Gender Scrollytelling Section -->
         <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
             <h2 class="text-3xl md:text-4xl font-bold font-heading">An Overwhelmingly Female Condition</h2>
-            <p class="mt-4 text-lg text-gray-400">Across all major studies, over 90% of SCAD patients are women, a statistic that sets it apart from typical atherosclerotic heart disease.</p>
+            <p class="mt-4 text-lg text-gray-400">Across all major studies, the vast majority of SCAD patients are women, a statistic that sets it apart from typical atherosclerotic heart disease.</p>
+            <div class="text-center my-8">
+                <div id="gender-stat" class="text-8xl md:text-9xl font-black gradient-text" data-value="92">0%</div>
+                <p class="text-2xl md:text-3xl font-heading">are women.</p>
+            </div>
             <div class="max-w-md mx-auto mt-8">
                  <canvas id="gender-chart"></canvas>
             </div>
@@ -203,6 +207,23 @@
                         section.classList.add('is-visible');
                     }
                 });
+            });
+            
+            // --- Animated Number Counter ---
+            const statElement = document.getElementById('gender-stat');
+            gsap.to(statElement, {
+                textContent: statElement.dataset.value,
+                duration: 2,
+                ease: "power1.inOut",
+                snap: { textContent: 1 },
+                scrollTrigger: {
+                    trigger: statElement,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                },
+                onUpdate: function() {
+                    this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent) + '%';
+                }
             });
 
             // --- Chart.js Global Options ---
