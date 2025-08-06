@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCAD: The Unseen Heart Attack</title>
+    <title>SCAD: The Unseen Heart Attack - Data Dashboard</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,195 +15,134 @@
 
     <!-- Custom Styles -->
     <style>
-        /* Define custom font families for Tailwind */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #111827; /* bg-gray-900 */
             color: #F9FAFB; /* text-gray-50 */
         }
-        .font-heading {
-            font-family: 'Inter', sans-serif;
-        }
-        .font-mono {
-            font-family: 'Roboto Mono', monospace;
-        }
-        /* Style for scroll-triggered animated sections */
-        .data-section {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .data-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        /* Custom gradient text */
+        .font-heading { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
         .gradient-text {
             background: linear-gradient(to right, #ef4444, #f87171);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        /* Icon array styles */
-        .icon-array {
-            display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            gap: 0.75rem;
-            max-width: 400px;
-            margin: 2rem auto;
+        .dashboard-card {
+            background-color: #1F2937; /* bg-gray-800 */
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem; /* p-6 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
         }
-        .icon-person {
-            width: 100%;
-            padding-bottom: 100%; /* Maintain aspect ratio */
-            border-radius: 0.25rem;
+        .dashboard-card h3 {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 700; /* font-bold */
+            margin-bottom: 1rem;
+            color: #D1D5DB; /* text-gray-300 */
+            text-align: center;
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased p-4 md:p-8">
 
-    <!-- Main Container -->
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-
-        <!-- Header / Hero Section -->
-        <header class="min-h-screen flex flex-col justify-center items-center text-center py-20">
-            <div class="max-w-4xl mx-auto">
-                <h1 id="hero-title" class="text-5xl md:text-7xl lg:text-8xl font-black font-heading uppercase tracking-tighter">
-                    <span class="gradient-text">The Unseen Attack</span>
-                </h1>
-                <p id="hero-subtitle" class="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
-                    Spontaneous Coronary Artery Dissection (SCAD) is a leading cause of heart attacks in young women. Yet, it remains dangerously under-diagnosed and under-researched. This is the story told by the data.
-                </p>
-            </div>
+    <!-- Main Dashboard Container -->
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-black font-heading tracking-tighter">
+                <span class="gradient-text">SCAD Clinical Dashboard</span>
+            </h1>
+            <p class="mt-2 text-lg text-gray-400">A Clinical Overview of Spontaneous Coronary Artery Dissection</p>
         </header>
 
-        <!-- Section 1: What is SCAD? -->
-        <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading">What is SCAD?</h2>
-            <p class="mt-4 text-lg text-gray-400">
-                Unlike traditional heart attacks caused by plaque, SCAD involves a tear in an artery wall. This can restrict blood flow and cause a heart attack, primarily affecting healthy individuals without standard cardiovascular risk factors.
-            </p>
-        </section>
+        <!-- Dashboard Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
 
-        <!-- Section 2: The Overwhelming Statistic -->
-        <section class="data-section my-24 md:my-32">
-            <div class="text-center">
-                <p class="text-2xl md:text-3xl font-heading text-gray-400">Of all SCAD patients...</p>
-                <div id="gender-stat" class="text-8xl md:text-9xl font-black my-4 gradient-text" data-value="90">0%</div>
-                <p class="text-2xl md:text-3xl font-heading">are women.</p>
+            <!-- Card 1: Gender Stat -->
+            <div class="dashboard-card lg:col-span-1 flex flex-col justify-center items-center text-center">
+                <h3>Gender</h3>
+                <p class="text-6xl lg:text-7xl font-black gradient-text" id="gender-stat" data-value="92">0%</p>
+                <p class="text-lg font-bold">Female</p>
             </div>
-            <div class="max-w-2xl mx-auto mt-8">
-                 <canvas id="gender-chart"></canvas>
-            </div>
-        </section>
 
-        <!-- Section 3: Presenting Symptoms -->
-        <section class="data-section my-24 md:my-32 max-w-5xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading text-center mb-4">Chest Pain is the Overwhelming Primary Symptom</h2>
-            <p class="text-lg text-gray-400 text-center max-w-3xl mx-auto mb-12">While nearly all patients experience chest pain, other common symptoms can be mistaken for less critical conditions, contributing to misdiagnosis.</p>
-            <div>
-                <canvas id="symptoms-chart"></canvas>
+            <!-- Card 2: Age Stat -->
+            <div class="dashboard-card lg:col-span-1 flex flex-col justify-center items-center text-center">
+                <h3>Mean Age</h3>
+                <p class="text-6xl lg:text-7xl font-black gradient-text">50</p>
+                <p class="text-lg font-bold">Years Old</p>
             </div>
-        </section>
 
-        <!-- Section 4: Age & Misdiagnosis -->
-        <section class="data-section my-24 md:my-32 max-w-5xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading text-center mb-12">SCAD Primarily Affects Women in Their 40s and 50s</h2>
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <p class="text-lg text-gray-400 mb-4">
-                        It is the <span class="text-red-400 font-bold">#1 cause of heart attacks</span> in women under 50 and new mothers.
-                    </p>
-                    <p class="text-lg text-gray-400">
-                        Because patients don't fit the typical profile of a heart attack victim, their symptoms are often dismissed as anxiety or indigestion, leading to critical delays in care.
-                    </p>
+            <!-- Card 3: Recurrence Risk -->
+            <div class="dashboard-card md:col-span-2 lg:col-span-2 text-center">
+                <h3>1 in 5 Survivors Experience Recurrence</h3>
+                <div id="recurrence-array" class="grid grid-cols-10 gap-2 md:gap-3 max-w-xs mx-auto my-4">
+                    <!-- Icons generated by JS -->
                 </div>
-                <div>
-                    <canvas id="age-chart"></canvas>
+                <p class="text-sm text-gray-500 font-mono">(15-22% reported recurrence rate)</p>
+            </div>
+
+            <!-- Card 4: Clinical Presentation -->
+            <div class="dashboard-card md:col-span-2 lg:col-span-2 text-center">
+                <h3>Clinical Presentation</h3>
+                <div class="flex-grow flex justify-around items-center">
+                    <div class="text-center">
+                        <p class="text-5xl font-bold text-red-400">42%</p>
+                        <p class="font-semibold">STEMI</p>
+                        <p class="text-xs text-gray-400">(Major Heart Attack)</p>
+                    </div>
+                     <div class="text-center">
+                        <p class="text-5xl font-bold text-yellow-400">58%</p>
+                        <p class="font-semibold">NSTEMI</p>
+                        <p class="text-xs text-gray-400">(Minor Heart Attack)</p>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Section 5: Common Triggers -->
-        <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading">Common Triggers</h2>
-            <p class="mt-4 text-lg text-gray-400">Over 50% of patients report a significant stressor immediately preceding their SCAD event.</p>
-            <div class="grid md:grid-cols-2 gap-8 mt-12 text-center">
-                <div class="bg-gray-800 p-8 rounded-lg">
-                    <p class="text-6xl mb-4">🤯</p>
-                    <h3 class="text-2xl font-bold">Intense Emotional Stress</h3>
-                    <p class="text-gray-400 mt-2">Reported by 40% of patients.</p>
-                </div>
-                <div class="bg-gray-800 p-8 rounded-lg">
-                     <p class="text-6xl mb-4">🏋️‍♀️</p>
-                    <h3 class="text-2xl font-bold">Extreme Physical Exertion</h3>
-                    <p class="text-gray-400 mt-2">Reported by 24% of patients.</p>
+            <!-- Card 5: Artery Involvement -->
+            <div class="dashboard-card md:col-span-2 lg:col-span-3">
+                <h3>Coronary Artery Involvement</h3>
+                <div class="flex-grow">
+                    <canvas id="artery-chart"></canvas>
                 </div>
             </div>
-        </section>
 
-        <!-- Section 6: Recurrence Risk -->
-        <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading">1 in 5 Survivors Will Have Another SCAD Event</h2>
-            <p class="mt-4 text-lg text-gray-400">The risk of recurrence is a major concern for patients. Out of 20 survivors, 4 may experience another dissection.</p>
-            <div id="recurrence-array" class="icon-array">
-                <!-- Icons will be generated by JS -->
+            <!-- Card 6: Patient Risk Profile -->
+            <div class="dashboard-card md:col-span-2 lg:col-span-3">
+                <h3>Traditional Risk Factors Are Often Absent</h3>
+                <div class="flex-grow">
+                    <canvas id="risk-factor-chart"></canvas>
+                </div>
             </div>
-            <p class="text-sm text-gray-500 font-mono">(15-22% reported recurrence rate in major studies)</p>
-        </section>
 
-        <!-- Section 7: The Research Gap -->
-        <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading">Underfunded. Understudied.</h2>
-            <p class="mt-4 text-lg text-gray-400">
-                Cardiovascular research has historically focused on men. As a result, conditions like SCAD that predominantly affect women are left with significant gaps in understanding, diagnosis, and treatment protocols.
-            </p>
-            <div class="mt-8 font-mono text-red-400 bg-gray-800 p-6 rounded-lg">
-                <p class="text-lg">"Most large cardiovascular trials exclude pre-menopausal women, creating a dangerous blind spot in medical knowledge." - AHA Scientific Statement</p>
+            <!-- Card 7: Research Gap -->
+            <div class="dashboard-card col-span-1 md:col-span-2 lg:col-span-6 text-center">
+                <h3>The Research Gap</h3>
+                <p class="mt-2 text-lg text-gray-400 max-w-4xl mx-auto">
+                    Data shows patients are overwhelmingly white (82-95%), highlighting potential underdiagnosis or research gaps in other populations.
+                </p>
+                <blockquote class="mt-4 font-mono text-red-400 bg-gray-900 p-4 rounded-lg">
+                    "Most large cardiovascular trials exclude pre-menopausal women, creating a dangerous blind spot in medical knowledge."
+                    <cite class="block text-sm text-gray-500 mt-2">- AHA Scientific Statement (2018)</cite>
+                </blockquote>
             </div>
-        </section>
+        </div>
 
-
-        <!-- Call to Action & Footer -->
-        <footer class="text-center py-16">
-            <h2 class="text-2xl md:text-3xl font-bold">Help Close the Gap.</h2>
-            <p class="mt-4 text-gray-400">Share this story to raise awareness.</p>
-            <div class="mt-6">
-                <a href="#" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">Support Research</a>
-            </div>
-            <p class="mt-12 text-sm text-gray-500 font-mono">#WIHDN #WIHDNDataStorytellingChallenge #WIHDNWaitingTime</p>
-             <p class="mt-4 text-xs text-gray-600 font-mono">Source: Hayes et al. (2018), AHA Scientific Statement</p>
+        <!-- Footer -->
+        <footer class="text-center py-8">
+            <p class="text-sm text-gray-500 font-mono">#WIHDN #WIHDNDataStorytellingChallenge #WIHDNWaitingTime</p>
+             <p class="mt-2 text-xs text-gray-600">Data derived from Hayes et al. (2018) & Tweet et al. (2018)</p>
         </footer>
-
     </div>
 
     <!-- JS Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-
 
     <!-- Custom JS -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            gsap.registerPlugin(ScrollTrigger);
             Chart.register(ChartDataLabels);
-
-            // --- Hero Animation ---
-            gsap.from("#hero-title", { opacity: 0, y: 30, duration: 1, delay: 0.2 });
-            gsap.from("#hero-subtitle", { opacity: 0, y: 30, duration: 1, delay: 0.5 });
-
-            // --- Animate Sections on Scroll ---
-            const sections = document.querySelectorAll('.data-section');
-            sections.forEach(section => {
-                ScrollTrigger.create({
-                    trigger: section,
-                    start: 'top 80%',
-                    once: true,
-                    onEnter: () => {
-                        section.classList.add('is-visible');
-                    }
-                });
-            });
 
             // --- Animated Number Counter ---
             const statElement = document.getElementById('gender-stat');
@@ -212,133 +151,39 @@
                 duration: 2,
                 ease: "power1.inOut",
                 snap: { textContent: 1 },
-                stagger: 1,
-                scrollTrigger: {
-                    trigger: statElement,
-                    start: "top 85%",
-                    toggleActions: "play none none none"
-                },
                 onUpdate: function() {
                     this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent) + '%';
                 }
             });
 
-            // --- Chart.js Options ---
-            const chartTextColor = '#D1D5DB'; // text-gray-300
+            // --- Chart.js Global Options ---
+            const chartTextColor = '#D1D5DB';
             const chartGridColor = 'rgba(255, 255, 255, 0.1)';
-            const chartFont = { size: 14, family: "'Inter', sans-serif" };
+            const chartFont = { size: 12, family: "'Inter', sans-serif" };
             const chartMonoFont = { family: "'Roboto Mono', monospace" };
+            Chart.defaults.color = chartTextColor;
+            Chart.defaults.font.family = "'Inter', sans-serif";
 
-            // --- Gender Doughnut Chart ---
-            const genderCtx = document.getElementById('gender-chart').getContext('2d');
-            new Chart(genderCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Women', 'Men'],
-                    datasets: [{
-                        label: 'SCAD Patients by Gender',
-                        data: [90, 10],
-                        backgroundColor: ['#ef4444', '#4b5563'],
-                        borderColor: '#111827',
-                        borderWidth: 4,
-                        hoverOffset: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    cutout: '70%',
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { color: chartTextColor, font: chartFont }
-                        },
-                        datalabels: {
-                           display: false
-                        }
-                    },
-                    animation: {
-                        animateScale: true,
-                        animateRotate: true
-                    }
-                }
-            });
-
-            // --- Symptoms Bar Chart ---
-            const symptomsCtx = document.getElementById('symptoms-chart').getContext('2d');
-            const symptomsData = [95.9, 51.5, 23.7, 22.2, 21.1, 19.6];
-            new Chart(symptomsCtx, {
+            // --- Artery Involvement Chart ---
+            const arteryCtx = document.getElementById('artery-chart').getContext('2d');
+            new Chart(arteryCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Chest Pain', 'Radiation to Arm', 'Nausea/Vomiting', 'Radiation to Neck', 'Diaphoresis', 'Dyspnea'],
+                    labels: ['LAD', 'LCx', 'RCA', 'Multivessel'],
                     datasets: [{
-                        label: 'Frequency of Presenting Symptoms',
-                        data: symptomsData,
-                        backgroundColor: symptomsData.map(d => d === 95.9 ? 'rgba(239, 68, 68, 0.8)' : 'rgba(75, 85, 99, 0.6)'),
-                        borderColor: symptomsData.map(d => d === 95.9 ? '#ef4444' : '#6b7280'),
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            grid: { color: chartGridColor },
-                            ticks: { display: false }
-                        },
-                        y: {
-                            grid: { display: false },
-                            ticks: { color: chartTextColor, font: chartFont }
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: false },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'end',
-                            formatter: (value) => value + '%',
-                            color: chartTextColor,
-                            font: { ...chartMonoFont, size: 14 }
-                        }
-                    }
-                }
-            });
-
-            // --- Age Distribution Bar Chart ---
-            const ageCtx = document.getElementById('age-chart').getContext('2d');
-            const ageData = [25, 45, 25, 5];
-            new Chart(ageCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['<40', '40-49', '50-59', '60+'],
-                    datasets: [{
-                        label: 'Age at First SCAD Event',
-                        data: ageData,
-                        backgroundColor: [
-                            'rgba(239, 68, 68, 0.5)',
-                            'rgba(239, 68, 68, 0.8)',
-                            'rgba(239, 68, 68, 0.5)',
-                            'rgba(239, 68, 68, 0.3)'
-                        ],
+                        label: 'Affected Artery',
+                        data: [50, 24, 20, 13], // Averaged data from table
+                        backgroundColor: 'rgba(239, 68, 68, 0.6)',
                         borderColor: '#ef4444',
                         borderWidth: 1
                     }]
                 },
                 options: {
-                    indexAxis: 'y',
                     responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
-                         x: {
-                            beginAtZero: true,
-                            grid: { color: chartGridColor },
-                            ticks: { display: false }
-                        },
-                        y: {
-                            grid: { display: false },
-                             ticks: { color: chartTextColor, font: chartFont }
-                        }
+                        y: { grid: { color: chartGridColor }, ticks: { font: chartFont } },
+                        x: { grid: { display: false }, ticks: { display: false } }
                     },
                     plugins: {
                         legend: { display: false },
@@ -347,25 +192,54 @@
                             anchor: 'end',
                             align: 'end',
                             formatter: (value) => value + '%',
-                            color: chartTextColor,
                             font: { ...chartMonoFont, size: 14 }
                         }
                     }
                 }
             });
 
+            // --- Risk Factor Chart ---
+            const riskFactorCtx = document.getElementById('risk-factor-chart').getContext('2d');
+            new Chart(riskFactorCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Hypertension', 'Dyslipidemia', 'Current Smoker', 'Diabetes'],
+                    datasets: [{
+                        label: 'Prevalence',
+                        data: [37, 28, 21, 2], // Averaged data from table
+                        backgroundColor: 'rgba(75, 85, 99, 0.6)',
+                        borderColor: '#6b7280',
+                        borderWidth: 1
+                    }]
+                },
+                 options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { color: chartGridColor }, ticks: { display: false } },
+                        y: { grid: { display: false }, ticks: { font: chartFont } }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                             formatter: (value, context) => context.chart.data.labels[context.dataIndex] + ': ' + value + '%',
+                            color: chartTextColor,
+                            font: { ...chartFont, size: 14, weight: 'bold' }
+                        }
+                    }
+                }
+            });
+
+
             // --- Recurrence Icon Array ---
             const recurrenceContainer = document.getElementById('recurrence-array');
-            const totalIcons = 20;
-            const affectedIcons = 4; // 1 in 5 = 4 in 20
-            for (let i = 0; i < totalIcons; i++) {
+            for (let i = 0; i < 20; i++) {
                 const icon = document.createElement('div');
-                icon.classList.add('icon-person');
-                if (i < affectedIcons) {
-                    icon.classList.add('bg-red-600');
-                } else {
-                    icon.classList.add('bg-gray-600');
-                }
+                icon.className = `aspect-square rounded ${i < 4 ? 'bg-red-600' : 'bg-gray-600'}`;
                 recurrenceContainer.appendChild(icon);
             }
         });
