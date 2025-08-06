@@ -88,3 +88,8 @@ body {
 .fractured-word .bottom {
   clip-path: inset(50% 0 0 0);
 }
+
+.split-word {
+  display: inline-block;
+  font-weight: 900;
+}

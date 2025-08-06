@@ -82,13 +82,22 @@
             </div>
         </section>
 
-        <!-- Section 3: Age & Misdiagnosis -->
+        <!-- Section 3: Presenting Symptoms -->
         <section class="data-section my-24 md:my-32 max-w-5xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading text-center mb-12">A Disease of the Young & Healthy</h2>
+            <h2 class="text-3xl md:text-4xl font-bold font-heading text-center mb-4">Chest Pain is the Overwhelming Primary Symptom</h2>
+            <p class="text-lg text-gray-400 text-center max-w-3xl mx-auto mb-12">While nearly all patients experience chest pain, other common symptoms can be mistaken for less critical conditions, contributing to misdiagnosis.</p>
+            <div>
+                <canvas id="symptoms-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Section 4: Age & Misdiagnosis -->
+        <section class="data-section my-24 md:my-32 max-w-5xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold font-heading text-center mb-12">SCAD Primarily Affects Women in Their 40s and 50s</h2>
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
                     <p class="text-lg text-gray-400 mb-4">
-                        SCAD is the <span class="text-red-400 font-bold">#1 cause of heart attacks</span> in women under 50 and new mothers.
+                        It is the <span class="text-red-400 font-bold">#1 cause of heart attacks</span> in women under 50 and new mothers.
                     </p>
                     <p class="text-lg text-gray-400">
                         Because patients don't fit the typical profile of a heart attack victim, their symptoms are often dismissed as anxiety or indigestion, leading to critical delays in care.
@@ -100,7 +109,35 @@
             </div>
         </section>
 
-        <!-- Section 4: The Research Gap -->
+        <!-- Section 5: Common Triggers -->
+        <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold font-heading">Common Triggers</h2>
+            <p class="mt-4 text-lg text-gray-400">Over 50% of patients report a significant stressor immediately preceding their SCAD event.</p>
+            <div class="grid md:grid-cols-2 gap-8 mt-12 text-center">
+                <div class="bg-gray-800 p-8 rounded-lg">
+                    <p class="text-6xl mb-4">🤯</p>
+                    <h3 class="text-2xl font-bold">Intense Emotional Stress</h3>
+                    <p class="text-gray-400 mt-2">Reported by 40% of patients.</p>
+                </div>
+                <div class="bg-gray-800 p-8 rounded-lg">
+                     <p class="text-6xl mb-4">🏋️‍♀️</p>
+                    <h3 class="text-2xl font-bold">Extreme Physical Exertion</h3>
+                    <p class="text-gray-400 mt-2">Reported by 24% of patients.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Recurrence Risk -->
+        <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold font-heading">The Lingering Risk</h2>
+            <p class="mt-4 text-lg text-gray-400">For survivors, the story doesn't end. The risk of a second SCAD event is significant.</p>
+            <div class="mt-8 font-mono text-red-400 bg-gray-800 p-8 rounded-lg text-3xl md:text-4xl font-bold">
+                <p>1 in 5 survivors may experience a recurrence.</p>
+                <p class="text-lg text-gray-400 mt-4">(15-22% reported recurrence rate in major studies)</p>
+            </div>
+        </section>
+
+        <!-- Section 7: The Research Gap -->
         <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
             <h2 class="text-3xl md:text-4xl font-bold font-heading">Underfunded. Understudied.</h2>
             <p class="mt-4 text-lg text-gray-400">
@@ -110,6 +147,7 @@
                 <p class="text-lg">"Most large cardiovascular trials exclude pre-menopausal women, creating a dangerous blind spot in medical knowledge." - AHA Scientific Statement</p>
             </div>
         </section>
+
 
         <!-- Call to Action & Footer -->
         <footer class="text-center py-16">
@@ -128,11 +166,14 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
 
     <!-- Custom JS -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             gsap.registerPlugin(ScrollTrigger);
+            Chart.register(ChartDataLabels);
 
             // --- Hero Animation ---
             gsap.from("#hero-title", { opacity: 0, y: 30, duration: 1, delay: 0.2 });
@@ -169,6 +210,12 @@
                 }
             });
 
+            // --- Chart.js Options ---
+            const chartTextColor = '#D1D5DB'; // text-gray-300
+            const chartGridColor = 'rgba(255, 255, 255, 0.1)';
+            const chartFont = { size: 14, family: "'Inter', sans-serif" };
+            const chartMonoFont = { family: "'Roboto Mono', monospace" };
+
             // --- Gender Doughnut Chart ---
             const genderCtx = document.getElementById('gender-chart').getContext('2d');
             new Chart(genderCtx, {
@@ -190,10 +237,10 @@
                     plugins: {
                         legend: {
                             position: 'bottom',
-                            labels: {
-                                color: '#D1D5DB', // text-gray-300
-                                font: { size: 14, family: "'Inter', sans-serif" }
-                            }
+                            labels: { color: chartTextColor, font: chartFont }
+                        },
+                        datalabels: {
+                           display: false
                         }
                     },
                     animation: {
@@ -203,15 +250,59 @@
                 }
             });
 
+            // --- Symptoms Bar Chart ---
+            const symptomsCtx = document.getElementById('symptoms-chart').getContext('2d');
+            const symptomsData = [95.9, 51.5, 23.7, 22.2, 21.1, 19.6];
+            new Chart(symptomsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Chest Pain', 'Radiation to Arm', 'Nausea/Vomiting', 'Radiation to Neck', 'Diaphoresis', 'Dyspnea'],
+                    datasets: [{
+                        label: 'Frequency of Presenting Symptoms',
+                        data: symptomsData,
+                        backgroundColor: symptomsData.map(d => d === 95.9 ? 'rgba(239, 68, 68, 0.8)' : 'rgba(75, 85, 99, 0.6)'),
+                        borderColor: symptomsData.map(d => d === 95.9 ? '#ef4444' : '#6b7280'),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: { color: chartGridColor },
+                            ticks: { display: false }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { color: chartTextColor, font: chartFont }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            formatter: (value) => value + '%',
+                            color: chartTextColor,
+                            font: { ...chartMonoFont, size: 14 }
+                        }
+                    }
+                }
+            });
+
             // --- Age Distribution Bar Chart ---
             const ageCtx = document.getElementById('age-chart').getContext('2d');
+            const ageData = [25, 45, 25, 5];
             new Chart(ageCtx, {
                 type: 'bar',
                 data: {
                     labels: ['<40', '40-49', '50-59', '60+'],
                     datasets: [{
                         label: 'Age at First SCAD Event',
-                        data: [25, 45, 25, 5], // Example data
+                        data: ageData,
                         backgroundColor: [
                             'rgba(239, 68, 68, 0.5)',
                             'rgba(239, 68, 68, 0.8)',
@@ -226,24 +317,25 @@
                     indexAxis: 'y',
                     responsive: true,
                     scales: {
-                        x: {
+                         x: {
                             beginAtZero: true,
-                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                            ticks: { color: '#9CA3AF', font: { family: "'Roboto Mono', monospace" } }
+                            grid: { color: chartGridColor },
+                            ticks: { display: false }
                         },
                         y: {
                             grid: { display: false },
-                             ticks: { color: '#D1D5DB', font: { family: "'Roboto Mono', monospace" } }
+                             ticks: { color: chartTextColor, font: chartFont }
                         }
                     },
                     plugins: {
                         legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataset.label + ': ' + context.formattedValue + '%';
-                                }
-                            }
+                        tooltip: { enabled: false },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            formatter: (value) => value + '%',
+                            color: chartTextColor,
+                            font: { ...chartMonoFont, size: 14 }
                         }
                     }
                 }
