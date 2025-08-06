@@ -123,13 +123,19 @@
             </div>
             <p class="text-sm text-gray-500 font-mono">SCAD accounts for 35% of heart attacks in this demographic.</p>
         </section>
+        
+        <!-- Misdiagnosis Section -->
+        <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold font-heading">Hidden in Plain Sight</h2>
+            <p class="mt-4 text-lg text-gray-400">Because patients are often young, healthy-appearing, and lack traditional risk factors, their symptoms are frequently dismissed as anxiety, indigestion, or musculoskeletal pain, leading to dangerous delays in treatment.</p>
+        </section>
 
         <!-- Gender Scrollytelling Section -->
         <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
             <h2 class="text-3xl md:text-4xl font-bold font-heading">An Overwhelmingly Female Condition</h2>
             <p class="mt-4 text-lg text-gray-400">This trend isn't limited to younger patients. Across all age groups, the vast majority of SCAD patients are women.</p>
             <div class="text-center my-8">
-                <div id="gender-stat" class="text-8xl md:text-9xl font-black gradient-text" data-value="92">0%</div>
+                <div id="gender-stat" class="text-8xl md:text-9xl font-black gradient-text" data-value="95">0%</div>
                 <p class="text-2xl md:text-3xl font-heading">are women.</p>
             </div>
             <div class="max-w-md mx-auto mt-8">
@@ -146,12 +152,12 @@
             </header>
 
             <!-- Dashboard Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
 
                 <!-- Card 1: Age Stat -->
                 <div class="dashboard-card lg:col-span-1 flex flex-col justify-center items-center text-center">
                     <h3>Mean Age</h3>
-                    <p class="text-6xl lg:text-7xl font-black gradient-text">50</p>
+                    <p class="text-6xl lg:text-7xl font-black gradient-text">53</p>
                     <p class="text-lg font-bold">Years Old</p>
                 </div>
 
@@ -159,7 +165,7 @@
                 <div class="dashboard-card md:col-span-1 lg:col-span-1 text-center">
                     <h3>Presentation</h3>
                     <div class="flex-grow flex flex-col justify-center items-center">
-                        <p class="text-5xl font-bold text-red-400">42%</p>
+                        <p class="text-5xl font-bold text-red-400">50%</p>
                         <p class="font-semibold">STEMI</p>
                         <p class="text-xs text-gray-400">(Major Heart Attack)</p>
                     </div>
@@ -167,30 +173,18 @@
                 
                 <!-- Card 3: Patient Risk Profile -->
                 <div class="dashboard-card md:col-span-2 lg:col-span-2">
-                    <h3>Traditional Risk Factors Are Often Absent</h3>
+                    <h3>Traditional Risk Factors</h3>
                     <div class="flex-grow">
                         <canvas id="risk-factor-chart"></canvas>
                     </div>
                 </div>
                 
-                <!-- Card 4: Migraine Association -->
-                <div class="dashboard-card lg:col-span-1 flex flex-col justify-center items-center text-center">
-                    <h3>Migraine Link</h3>
-                    <p class="text-5xl font-bold text-purple-400">~40%</p>
-                    <p class="text-md font-semibold">of SCAD patients also suffer from migraines</p>
-                </div>
-
-
-                <!-- Card 5: Research Gap -->
-                <div class="dashboard-card col-span-1 md:col-span-2 lg:col-span-5 text-center">
-                    <h3>The Research Gap</h3>
-                    <p class="mt-2 text-lg text-gray-400 max-w-4xl mx-auto">
-                        Data shows patients are overwhelmingly white (82-95%), highlighting potential underdiagnosis or research gaps in other populations.
-                    </p>
-                    <blockquote class="mt-4 font-mono text-red-400 bg-gray-900 p-4 rounded-lg">
-                        "Most large cardiovascular trials exclude pre-menopausal women, creating a dangerous blind spot in medical knowledge."
-                        <cite class="block text-sm text-gray-500 mt-2">- AHA Scientific Statement (2018)</cite>
-                    </blockquote>
+                <!-- Card 4: Associated Conditions -->
+                <div class="dashboard-card md:col-span-2 lg:col-span-2">
+                    <h3>Associated Conditions</h3>
+                    <div class="flex-grow">
+                        <canvas id="associated-conditions-chart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -198,9 +192,27 @@
         <!-- Scrollytelling Sections -->
         <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
              <h2 class="text-3xl md:text-4xl font-bold font-heading">The Left Anterior Descending (LAD) is Most Commonly Affected</h2>
-             <p class="mt-4 text-lg text-gray-400">Known as the "widowmaker" artery, the LAD is the site of dissection in half of all SCAD cases.</p>
+             <p class="mt-4 text-lg text-gray-400">Known as the "widowmaker" artery, the LAD is the site of dissection in over half of all SCAD cases.</p>
             <div class="mt-8">
                 <canvas id="artery-chart"></canvas>
+            </div>
+        </section>
+        
+        <!-- Precipitating Stressors Section -->
+        <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
+             <h2 class="text-3xl md:text-4xl font-bold font-heading">Precipitating Stressors are Common</h2>
+             <p class="mt-4 text-lg text-gray-400">Unlike typical heart attacks, SCAD is frequently preceded by a major emotional or physical stressor.</p>
+            <div class="grid md:grid-cols-2 gap-8 mt-12 text-center">
+                <div class="bg-gray-800 p-8 rounded-lg">
+                    <p class="text-6xl mb-4 font-bold gradient-text">48%</p>
+                    <h3 class="text-2xl font-bold">Report Emotional Stress</h3>
+                    <p class="text-gray-400 mt-2">Nearly half of patients experienced intense emotional stress before their SCAD event.</p>
+                </div>
+                <div class="bg-gray-800 p-8 rounded-lg">
+                     <p class="text-6xl mb-4 font-bold gradient-text">29%</p>
+                    <h3 class="text-2xl font-bold">Report Physical Stress</h3>
+                    <p class="text-gray-400 mt-2">Such as intense exercise or activities involving straining.</p>
+                </div>
             </div>
         </section>
 
@@ -233,15 +245,15 @@
         
         <!-- Bubble Chart Section -->
         <section class="data-section my-24 md:my-32 max-w-5xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading">SCAD in the Context of All Heart Attacks</h2>
-            <p class="mt-4 text-lg text-gray-400">This visualization shows how SCAD fits into the broader picture of Acute Coronary Syndromes (ACS).</p>
+            <h2 class="text-3xl md:text-4xl font-bold font-heading">The Landscape of SCAD Triggers</h2>
+            <p class="mt-4 text-lg text-gray-400">This visualization shows the breakdown of precipitating stressors for SCAD patients, highlighting the significant role of emotional and physical triggers.</p>
             <div id="bubble-chart-container"></div>
         </section>
 
         <!-- Footer -->
         <footer class="text-center py-8">
             <p class="text-sm text-gray-500 font-mono">#WIHDN #WIHDNDataStorytellingChallenge #WIHDNWaitingTime</p>
-             <p class="mt-2 text-xs text-gray-600">Data derived from Hayes et al. (2018) & Tweet et al. (2018)</p>
+             <p class="mt-2 text-xs text-gray-600">Data derived from Prakash et al. (2021), Hayes et al. (2018) & Tweet et al. (2018)</p>
         </footer>
     </main>
 
@@ -306,7 +318,7 @@
                 data: {
                     labels: ['Women', 'Men'],
                     datasets: [{
-                        data: [92, 8],
+                        data: [94.6, 5.4],
                         backgroundColor: ['#ef4444', '#4b5563'],
                         borderColor: '#111827',
                         borderWidth: 6,
@@ -340,7 +352,7 @@
                     labels: ['LAD', 'LCx', 'RCA', 'Multivessel'],
                     datasets: [{
                         label: 'Affected Artery',
-                        data: [50, 24, 20, 13], // Averaged data from table
+                        data: [52.1, 29.6, 26.2, 11.5],
                         backgroundColor: 'rgba(239, 68, 68, 0.6)',
                         borderColor: '#ef4444',
                         borderWidth: 1
@@ -366,22 +378,58 @@
             new Chart(riskFactorCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Hypertension', 'Dyslipidemia', 'Current Smoker', 'Diabetes'],
+                    labels: ['Hypertension', 'Hyperlipidemia', 'Smoker', 'Diabetes'],
                     datasets: [{
                         label: 'Prevalence',
-                        data: [37, 28, 21, 2], // Averaged data from table
+                        data: [43.1, 36.6, 15.1, 4.8],
                         backgroundColor: [
                             'rgba(239, 68, 68, 0.7)',    // Red
                             'rgba(249, 115, 22, 0.7)',   // Orange
                             'rgba(245, 158, 11, 0.7)',  // Amber
                             'rgba(107, 114, 128, 0.7)'  // Gray
                         ],
-                        borderColor: [
-                            '#ef4444',
-                            '#f97316',
-                            '#f59e0b',
-                            '#6b7280'
+                        borderColor: ['#ef4444', '#f97316', '#f59e0b', '#6b7280'],
+                        borderWidth: 1
+                    }]
+                },
+                 options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { color: chartGridColor }, ticks: { display: false } },
+                        y: { grid: { display: false }, ticks: { font: chartFont } }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                             formatter: (value, context) => context.chart.data.labels[context.dataIndex] + ': ' + value + '%',
+                            color: chartTextColor,
+                            font: { ...chartFont, size: 14, weight: 'bold' }
+                        }
+                    }
+                }
+            });
+            
+            // --- Associated Conditions Chart ---
+            const associatedCtx = document.getElementById('associated-conditions-chart').getContext('2d');
+            new Chart(associatedCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['FMD', 'Migraine', 'Inflammatory', 'Connective Tissue'],
+                    datasets: [{
+                        label: 'Prevalence',
+                        data: [44.2, 38.8, 5.6, 4.9],
+                        backgroundColor: [
+                            'rgba(192, 132, 252, 0.7)', // Purple
+                            'rgba(139, 92, 246, 0.7)',  // Violet
+                            'rgba(99, 102, 241, 0.7)',  // Indigo
+                            'rgba(59, 130, 246, 0.7)'   // Blue
                         ],
+                        borderColor: ['#c084fc', '#8b5cf6', '#6366f1', '#3b82f6'],
                         borderWidth: 1
                     }]
                 },
@@ -426,23 +474,18 @@
 
             // --- D3 Bubble Chart ---
             const bubbleData = {
-                name: "All Heart Attacks (ACS)",
-                value: 1000, color: "#6b7280",
+                name: "All SCAD Patients (n=436)", value: 436, color: "#6b7280",
                 children: [
+                    { name: "Emotional Stressor", value: 211, color: "#c084fc" },
                     {
-                        name: "Women < 50", value: 400, color: "#f87171",
+                        name: "Physical Stressor", value: 125, color: "#f97316",
                         children: [
-                            { name: "SCAD", value: 140, color: "#ef4444" },
-                            { name: "Other Causes", value: 260, color: "#fb923c" }
+                            { name: "Isometric Exercise", value: 56, color: "#fb923c" },
+                            { name: "Valsalva Strain", value: 46, color: "#fdba74" },
+                            { name: "Other Physical", value: 23, color: "#fed7aa" }
                         ]
                     },
-                    {
-                        name: "All Other Patients", value: 600, color: "#a1a1aa",
-                        children: [
-                            { name: "SCAD", value: 24, color: "#ef4444" },
-                            { name: "Other Causes", value: 576, color: "#d4d4d8" }
-                        ]
-                    }
+                    { name: "No Known Trigger", value: 100, color: "#a1a1aa" }
                 ]
             };
 
@@ -487,21 +530,20 @@
 
             node.append("text")
                 .selectAll("tspan")
-                .data(d => d.data.name.split(/(?=[A-Z][^A-Z])/g))
+                .data(d => {
+                    const name = d.data.name;
+                    const value = d.value;
+                    const total = packedRoot.value;
+                    const percentage = ((value / total) * 100).toFixed(1);
+                    if (d.depth > 0) {
+                        return `${name} (${percentage}%)`.split(/(?=[A-Z][^A-Z])/g);
+                    }
+                    return name.split(/(?=[A-Z][^A-Z])/g);
+                })
                 .join("tspan")
                 .attr("x", 0)
                 .attr("y", (d, i, nodes) => `${i - nodes.length / 2 + 0.8}em`)
                 .text(d => d);
-            
-            node.append("text")
-                .attr("dy", "1.5em")
-                .style("font-size", "10px")
-                .style("font-weight", "bold")
-                .text(d => {
-                    if(d.data.name === "SCAD" && d.parent.data.name === "Women < 50") return "35%";
-                    if(d.data.name === "SCAD" && d.parent.data.name === "All Other Patients") return "~4%";
-                    return "";
-                });
 
             simulation.on("tick", () => {
                 link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
