@@ -1,150 +1,103 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const ctx = document.getElementById('genderChart');
-
-  new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: ['Women', 'Men'],
-      datasets: [{
-        label: 'SCAD by Gender',
-        data: [90, 10],
-        backgroundColor: ['#8B0000', '#D3D3D3'],
-        borderColor: '#ffffff',
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'bottom',
-          labels: {
-            font: {
-              size: 16,
-              family: 'Inter'
-            }
-          }
-        },
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              return `${context.label}: ${context.parsed}%`;
-            }
-          }
-        }
-      }
-    }
-  });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Animate the wrapper, not the canvas itself
-  gsap.from("#genderChartWrapper", {
-    scrollTrigger: {
-      trigger: "#genderChartWrapper",
-      start: "top 80%",
-      toggleActions: "play none none none"
-    },
-    opacity: 0,
-    y: 60,
-    duration: 1.2,
-    ease: "power2.out"
-  });
-
-  // Only draw the chart once it's visible
-  ScrollTrigger.create({
-    trigger: "#genderChartWrapper",
-    start: "top 80%",
-    once: true,
-    onEnter: () => initGenderChart()
-  });
-});
-
-function initGenderChart() {
-  const ctx = document.getElementById('genderChart');
-  new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: ['Women', 'Men'],
-      datasets: [{
-        data: [90, 10],
-        backgroundColor: ['#8B0000', '#D3D3D3'],
-        borderWidth: 2
-      }]
-    },
-    options: {
-      animation: {
-        animateScale: true,
-        duration: 1000
-      },
-      plugins: {
-        legend: { position: 'bottom' },
-        tooltip: {
-          callbacks: {
-            label: function (context) {
-              return `${context.label}: ${context.parsed}%`;
-            }
-          }
-        }
-      }
-    }
-  });
-}
-
+// Register GSAP plugin
 gsap.registerPlugin(ScrollTrigger);
 
-// Animate words on scroll
-gsap.to(".fracture-word", {
-  scrollTrigger: {
-    trigger: "#heroTitle",
-    start: "top 70%",
-    toggleActions: "play none none none"
-  },
-  opacity: 1,
-  y: 0,
-  scale: 1,
-  duration: 0.8,
-  ease: "power3.out",
-  stagger: {
-    each: 0.06,
-    from: "start"
-  }
-});
+///////////////////////////////
+// 1. FRACTURE TEXT ANIMATION
+///////////////////////////////
 
 ScrollTrigger.create({
   trigger: "#heroTitle",
   start: "top 70%",
   once: true,
   onEnter: () => {
-    gsap.to(".fracture-word", {
-      x: (i) => (Math.random() - 0.5) * 4,
-      y: (i) => (Math.random() - 0.5) * 2,
-      duration: 0.08,
-      repeat: 3,
+    // Top half rise
+    gsap.fromTo(".fractured-word .top", {
+      y: 0
+    }, {
+      y: -20,
+      rotation: -4,
+      opacity: 0.85,
+      duration: 0.4,
+      ease: "power1.inOut",
       yoyo: true,
-      ease: "rough({strength:1})",
-      delay: 1.2
+      repeat: 1,
+      stagger: 0.05
+    });
+
+    // Bottom half fall
+    gsap.fromTo(".fractured-word .bottom", {
+      y: 0
+    }, {
+      y: 20,
+      rotation: 4,
+      opacity: 0.85,
+      duration: 0.4,
+      ease: "power1.inOut",
+      yoyo: true,
+      repeat: 1,
+      stagger: 0.05
+    });
+
+    // Fade in rest of title
+    gsap.from("#restOfTitle", {
+      opacity: 0,
+      y: 30,
+      delay: 0.4,
+      duration: 1,
+      ease: "power3.out"
+    });
+
+    // Fade in subtitle
+    gsap.from("#heroSub", {
+      opacity: 0,
+      y: 20,
+      delay: 0.6,
+      duration: 1,
+      ease: "power3.out"
     });
   }
 });
 
+//////////////////////////////////
+// 2. CHART.JS - SCAD by Gender
+//////////////////////////////////
+
+let chartRendered = false;
+
 ScrollTrigger.create({
-  trigger: "#heroTitle",
-  start: "top 70%",
+  trigger: "#genderChart",
+  start: "top 80%",
   once: true,
   onEnter: () => {
-    setTimeout(() => {
-      gsap.to(".fracture-word", {
-        x: (i) => (Math.random() - 0.5) * 8,  // horizontal shift
-        y: (i) => (Math.random() - 0.5) * 4,  // vertical shift
-        skewX: (i) => (Math.random() - 0.5) * 4, // slight skew
-        duration: 0.05,
-        repeat: 4,
-        yoyo: true,
-        ease: "power1.inOut"
-      });
-    }, 1000); // delay 1s after the text reveals
+    if (chartRendered) return;
+
+    const ctx = document.getElementById("genderChart").getContext("2d");
+
+    new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: ["Women (90%)", "Men (10%)"],
+        datasets: [{
+          data: [90, 10],
+          backgroundColor: ["#dc3545", "#f8d7da"],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        cutout: "60%",
+        plugins: {
+          legend: {
+            display: true,
+            position: "bottom"
+          }
+        },
+        animation: {
+          duration: 1200,
+          easing: "easeOutBounce"
+        }
+      }
+    });
+
+    chartRendered = true;
   }
 });
