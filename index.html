@@ -13,98 +13,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Custom Styles -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #111827; /* bg-gray-900 */
-            color: #F9FAFB; /* text-gray-50 */
-        }
-        .font-heading { font-family: 'Inter', sans-serif; }
-        .font-mono { font-family: 'Roboto Mono', monospace; }
-        .gradient-text {
-            background: linear-gradient(to right, #ef4444, #f87171);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .dashboard-card {
-            background-color: #1F2937; /* bg-gray-800 */
-            border-radius: 0.75rem; /* rounded-xl */
-            padding: 1.5rem; /* p-6 */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-        }
-        .dashboard-card h3 {
-            font-size: 1.125rem; /* text-lg */
-            font-weight: 700; /* font-bold */
-            margin-bottom: 1rem;
-            color: #D1D5DB; /* text-gray-300 */
-            text-align: center;
-        }
-        .scroll-down-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            40% {
-                transform: translateX(-50%) translateY(-20px);
-            }
-            60% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-        }
-        .data-section {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .data-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        /* D3 Bubble Chart Styles */
-        #bubble-chart-container {
-            width: 100%;
-            height: 600px;
-        }
-        .bubble-node circle {
-            stroke: #111827;
-            stroke-width: 3px;
-        }
-        .bubble-node text {
-            font-size: 12px;
-            pointer-events: none;
-            text-anchor: middle;
-            fill: #fff;
-            font-weight: 500;
-        }
-        .bubble-link {
-            stroke: #6b7280;
-            stroke-opacity: 0.6;
-            stroke-width: 1.5px;
-        }
-    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="antialiased">
 
     <!-- Hero Section -->
     <header class="min-h-screen flex flex-col justify-center items-center text-center p-4 relative">
         <div class="max-w-4xl mx-auto">
-            <h1 id="hero-title" class="text-5xl md:text-7xl lg:text-8xl font-black font-heading uppercase tracking-tighter">
-                <span class="gradient-text">The Unseen Attack</span>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black font-heading uppercase tracking-tighter gradient-text">
+                The Unseen Attack
             </h1>
-            <p id="hero-subtitle" class="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
+            <p id="hero-subtitle-reveal" class="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
                 Spontaneous Coronary Artery Dissection (SCAD) is a leading cause of heart attacks in young women. Yet, it remains dangerously under-diagnosed and under-researched.
             </p>
+             <p id="hero-stat-fade" class="text-2xl md:text-3xl font-bold text-red-400 max-w-2xl mx-auto mt-8 opacity-0">It accounts for 35% of heart attacks in women under 50.</p>
         </div>
-        <div class="scroll-down-indicator text-gray-400">
+        <div id="scroll-indicator-wrapper" class="scroll-down-indicator text-gray-400">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
@@ -114,146 +39,304 @@
     <!-- Main Content -->
     <main class="mx-auto p-4 md:p-8">
 
+        <!-- The Patient Profile -->
+        <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-black font-heading tracking-tighter gradient-text">The Patient</h2>
+            <p class="mt-4 text-lg text-gray-400">SCAD challenges the stereotype of a heart attack patient, which is a primary reason it's often missed.</p>
+        </section>
+
         <!-- Young Hearts Section -->
         <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading">Young Hearts, Torn Apart</h2>
+            <h3 class="text-3xl md:text-4xl font-bold font-heading">SCAD is a leading cause of heart attacks in women under 50</h3>
             <p class="mt-4 text-lg text-gray-400">While often overlooked, SCAD is a primary cause of heart attacks in women under 50, making it a critical issue in young women's health.</p>
             <div id="mi-under-50-array" class="grid grid-cols-10 gap-4 max-w-2xl mx-auto my-8">
                 <!-- Icons generated by JS -->
             </div>
             <p class="text-sm text-gray-500 font-mono">SCAD accounts for 35% of heart attacks in this demographic.</p>
+             <p class="text-xs text-gray-500 font-mono mt-2 text-right">Source: American College of Cardiology (2025a)</p>
         </section>
         
-        <!-- Misdiagnosis Section -->
-        <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading">Hidden in Plain Sight</h2>
-            <p class="mt-4 text-lg text-gray-400">Because patients are often young, healthy-appearing, and lack traditional risk factors, their symptoms are frequently dismissed as anxiety, indigestion, or musculoskeletal pain, leading to dangerous delays in treatment.</p>
-        </section>
-
         <!-- Gender Scrollytelling Section -->
         <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading">An Overwhelmingly Female Condition</h2>
-            <p class="mt-4 text-lg text-gray-400">This trend isn't limited to younger patients. Across all age groups, the vast majority of SCAD patients are women.</p>
+            <h3 class="text-3xl md:text-4xl font-bold font-heading">Over 90% of SCAD Patients are Women</h3>
+            <p class="mt-4 text-lg text-gray-400">Across all age groups, the vast majority of SCAD patients are women.</p>
             <div class="text-center my-8">
                 <div id="gender-stat" class="text-8xl md:text-9xl font-black gradient-text" data-value="95">0%</div>
-                <p class="text-2xl md:text-3xl font-heading">are women.</p>
             </div>
             <div class="max-w-md mx-auto mt-8">
                  <canvas id="gender-chart"></canvas>
             </div>
+             <p class="text-xs text-gray-500 font-mono mt-2 text-right">Source: Prakash et al. (2021)</p>
         </section>
 
-        <div class="max-w-7xl mx-auto data-section">
-            <header class="mb-8 text-center">
-                <h2 class="text-4xl md:text-5xl font-black font-heading tracking-tighter">
-                    <span class="gradient-text">A Closer Look at the Clinical Data</span>
-                </h2>
-                <p class="mt-2 text-lg text-gray-400">The clinical profile of a SCAD patient challenges the conventional understanding of heart disease.</p>
-            </header>
-
-            <!-- Dashboard Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
-
-                <!-- Card 1: Age Stat -->
-                <div class="dashboard-card lg:col-span-1 flex flex-col justify-center items-center text-center">
-                    <h3>Mean Age</h3>
-                    <p class="text-6xl lg:text-7xl font-black gradient-text">53</p>
-                    <p class="text-lg font-bold">Years Old</p>
-                </div>
-
-                <!-- Card 2: Clinical Presentation -->
-                <div class="dashboard-card md:col-span-1 lg:col-span-1 text-center">
-                    <h3>Presentation</h3>
-                    <div class="flex-grow flex flex-col justify-center items-center">
-                        <p class="text-5xl font-bold text-red-400">50%</p>
-                        <p class="font-semibold">STEMI</p>
-                        <p class="text-xs text-gray-400">(Major Heart Attack)</p>
-                    </div>
-                </div>
-                
-                <!-- Card 3: Patient Risk Profile -->
-                <div class="dashboard-card md:col-span-2 lg:col-span-2">
-                    <h3>Traditional Risk Factors</h3>
-                    <div class="flex-grow">
-                        <canvas id="risk-factor-chart"></canvas>
-                    </div>
-                </div>
-                
-                <!-- Card 4: Associated Conditions -->
-                <div class="dashboard-card md:col-span-2 lg:col-span-2">
-                    <h3>Associated Conditions</h3>
-                    <div class="flex-grow">
-                        <canvas id="associated-conditions-chart"></canvas>
-                    </div>
-                </div>
+        <!-- The Clinical Picture -->
+        <section class="data-section my-24 md:my-32 max-w-5xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-black font-heading tracking-tighter gradient-text">The Clinical Picture</h2>
+            <p class="mt-4 text-lg text-gray-400">The clinical profile of a SCAD patient differs significantly from that of a typical heart attack.</p>
+             <div class="dashboard-card mt-12">
+                <h3 class="font-bold">SCAD Patients Have Far Fewer Traditional Risk Factors Than Typical MI Patients</h3>
+                <canvas id="risk-factor-chart"></canvas>
+                 <p class="text-xs text-gray-500 font-mono mt-2 text-right">Source: Prakash et al. (2021)</p>
             </div>
-        </div>
+             <div class="dashboard-card mt-8">
+                <h3 class="font-bold">SCAD is Strongly Associated With Other Systemic Conditions</h3>
+                <div class="h-64"><canvas id="associated-conditions-chart"></canvas></div>
+                 <p class="text-xs text-gray-500 font-mono mt-2 text-right">Source: Prakash et al. (2021)</p>
+            </div>
+        </section>
 
-        <!-- Scrollytelling Sections -->
+        <!-- Artery Involvement Section -->
         <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
-             <h2 class="text-3xl md:text-4xl font-bold font-heading">The Left Anterior Descending (LAD) is Most Commonly Affected</h2>
+             <h3 class="text-3xl md:text-4xl font-bold font-heading">The Left Anterior Descending (LAD) is Most Commonly Affected</h3>
              <p class="mt-4 text-lg text-gray-400">Known as the "widowmaker" artery, the LAD is the site of dissection in over half of all SCAD cases.</p>
             <div class="mt-8">
                 <canvas id="artery-chart"></canvas>
             </div>
+             <p class="text-xs text-gray-500 font-mono mt-2 text-right">Source: Prakash et al. (2021)</p>
         </section>
-        
-        <!-- Precipitating Stressors Section -->
-        <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
-             <h2 class="text-3xl md:text-4xl font-bold font-heading">Precipitating Stressors are Common</h2>
-             <p class="mt-4 text-lg text-gray-400">Unlike typical heart attacks, SCAD is frequently preceded by a major emotional or physical stressor.</p>
-            <div class="grid md:grid-cols-2 gap-8 mt-12 text-center">
-                <div class="bg-gray-800 p-8 rounded-lg">
-                    <p class="text-6xl mb-4 font-bold gradient-text">48%</p>
-                    <h3 class="text-2xl font-bold">Report Emotional Stress</h3>
-                    <p class="text-gray-400 mt-2">Nearly half of patients experienced intense emotional stress before their SCAD event.</p>
+
+        <!-- The Treatment Decision -->
+        <section class="data-section my-24 md:my-32 max-w-5xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-black font-heading tracking-tighter gradient-text">The Treatment Decision</h2>
+            <p class="mt-4 text-lg text-gray-400">Once SCAD is diagnosed, a critical decision follows. Unlike typical heart attacks, the approach is more nuanced, balancing intervention with the body's ability to heal.</p>
+            <div class="grid md:grid-cols-2 gap-8 mt-12">
+                <div class="dashboard-card">
+                    <h3 class="font-bold">Complete Blockages (Type 4) Are More Likely to Receive a Stent</h3>
+                    <p class="text-sm text-gray-400 mb-4">The type of tear dictates the treatment. Doctors are more likely to intervene with a stent (PCI) for a complete blockage.</p>
+                    <canvas id="scad-type-chart"></canvas>
+                     <p class="text-xs text-gray-500 font-mono mt-2 text-right">Source: Prakash et al. (2021)</p>
                 </div>
-                <div class="bg-gray-800 p-8 rounded-lg">
-                     <p class="text-6xl mb-4 font-bold gradient-text">29%</p>
-                    <h3 class="text-2xl font-bold">Report Physical Stress</h3>
-                    <p class="text-gray-400 mt-2">Such as intense exercise or activities involving straining.</p>
+                <div class="dashboard-card">
+                    <h3 class="font-bold">Stenting Commits Patients to More Aggressive Medication</h3>
+                    <p class="text-sm text-gray-400 mb-4">Receiving a stent requires a more intense regimen of blood thinners (DAPT) to prevent clotting.</p>
+                    <canvas id="medication-chart"></canvas>
+                     <p class="text-xs text-gray-500 font-mono mt-2 text-right">Source: Prakash et al. (2021)</p>
                 </div>
             </div>
         </section>
 
+        <!-- The Long-Term Outlook -->
+         <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-black font-heading tracking-tighter gradient-text">The Long-Term Outlook</h2>
+            <p class="mt-4 text-lg text-gray-400">For survivors, the journey continues with long-term risks and considerations.</p>
+        </section>
+
         <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading">1 in 5 Survivors Will Have Another SCAD Event</h2>
+            <h3 class="text-3xl md:text-4xl font-bold font-heading">1 in 5 Survivors Will Have Another SCAD Event</h3>
             <p class="mt-4 text-lg text-gray-400">The risk of recurrence is a major concern for patients. Out of 20 survivors, 4 may experience another dissection.</p>
             <div id="recurrence-array" class="grid grid-cols-10 gap-4 max-w-md mx-auto my-8">
-                <!-- Icons generated by JS -->
+                <!-- Icons will be generated by JS -->
             </div>
             <p class="text-sm text-gray-500 font-mono">(15-22% reported recurrence rate in major studies)</p>
+            <p class="text-xs text-gray-500 font-mono mt-2 text-right">Source: Hayes et al. (2018)</p>
+        </section>
+        
+        <!-- AI Section -->
+        <section class="data-section my-24 md:my-32 max-w-5xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-black font-heading tracking-tighter gradient-text">The Algorithmic Double-Edged Sword</h2>
+            <p class="mt-4 text-lg text-gray-400">Artificial Intelligence holds immense promise for solving the SCAD diagnostic puzzle, but it also risks amplifying the very biases that harm patients today.</p>
+        
+            <div id="ai-scrolly-section" class="grid md:grid-cols-2 gap-x-12 gap-y-8 mt-16 text-left">
+                <!-- Promise Column -->
+                <div class="border-t-4 border-green-500 pt-4">
+                    <h3 class="text-2xl font-bold text-green-400 mb-6">The Promise of AI</h3>
+                    <ul class="space-y-8 text-gray-300">
+                        <li class="ai-promise-item flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mr-4 mt-1 font-bold">1</div>
+                            <div>
+                                <h4 class="font-bold">Enhanced Analysis</h4>
+                                <p class="text-sm text-gray-400">AI can recognize subtle SCAD patterns in angiograms that are often missed by the human eye, reducing misdiagnosis.</p>
+                            </div>
+                        </li>
+                        <li class="ai-promise-item flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mr-4 mt-1 font-bold">2</div>
+                            <div>
+                                <h4 class="font-bold">Safer Diagnosis</h4>
+                                <p class="text-sm text-gray-400">By improving non-invasive CCTA scans, AI could help many patients avoid higher-risk invasive procedures altogether.</p>
+                            </div>
+                        </li>
+                         <li class="ai-promise-item flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mr-4 mt-1 font-bold">3</div>
+                            <div>
+                                <h4 class="font-bold">Personalized Risk Prediction</h4>
+                                <p class="text-sm text-gray-400">AI can integrate thousands of data points to predict who is at highest risk, enabling preventive care.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Peril Column -->
+                <div class="border-t-4 border-red-500 pt-4">
+                    <h3 class="text-2xl font-bold text-red-400 mb-6">The Peril of Bias</h3>
+                    <ul class="space-y-8 text-gray-300">
+                        <li class="ai-peril-item flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center mr-4 mt-1 font-bold">1</div>
+                            <div>
+                                <h4 class="font-bold">Biased Training Data</h4>
+                                <p class="text-sm text-gray-400">If AI is trained on historical data that underrepresents women, it will be less accurate for the primary SCAD population.</p>
+                            </div>
+                        </li>
+                        <li class="ai-peril-item flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center mr-4 mt-1 font-bold">2</div>
+                            <div>
+                                <h4 class="font-bold">The "Common Disease" Trap</h4>
+                                <p class="text-sm text-gray-400">An AI may learn to ignore rare diseases like SCAD to optimize its accuracy for more common heart attacks.</p>
+                            </div>
+                        </li>
+                         <li class="ai-peril-item flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center mr-4 mt-1 font-bold">3</div>
+                            <div>
+                                <h4 class="font-bold">Automating Misdiagnosis</h4>
+                                <p class="text-sm text-gray-400">A biased AI could lead to widespread, automated diagnostic errors, amplifying existing health inequities.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-4 font-mono">Source: The Algorithmic Double-Edged Sword: AI, Gender Bias, and the Diagnostic Challenge of SCAD</p>
+        
+            <!-- Cascade of Bias Table -->
+            <div class="mt-16 text-left overflow-x-auto">
+                <h3 class="text-2xl font-bold text-center mb-6">The Cascade of Bias in AI-Powered SCAD Diagnosis</h3>
+                <table class="w-full min-w-[800px] border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-700">
+                            <th class="p-4 text-sm font-bold uppercase text-gray-400">Stage of Bias</th>
+                            <th class="p-4 text-sm font-bold uppercase text-gray-400">Mechanism</th>
+                            <th class="p-4 text-sm font-bold uppercase text-gray-400">Consequence for SCAD Patient</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-300">
+                        <tr class="bias-table-row border-b border-gray-800">
+                            <td class="p-4 font-bold align-top">Historical Research Bias</td>
+                            <td class="p-4 align-top">Systemic exclusion of women from cardiovascular trials, leading to a male-centric view of heart disease.</td>
+                            <td class="p-4 align-top">SCAD, as a predominantly female and non-atherosclerotic condition, remains under-researched and under-prioritized.</td>
+                        </tr>
+                        <tr class="bias-table-row border-b border-gray-800">
+                            <td class="p-4 font-bold align-top">Data Collection Bias</td>
+                            <td class="p-4 align-top">AI training datasets (EHRs, trial data) reflect historical biases and lack demographic and disease diversity. High-quality, labeled SCAD cases are rare.</td>
+                            <td class="p-4 align-top">The AI model lacks sufficient data to learn the distinct patterns of SCAD. Its "worldview" is skewed toward common, male-pattern heart attacks.</td>
+                        </tr>
+                        <tr class="bias-table-row border-b border-gray-800">
+                            <td class="p-4 font-bold align-top">Algorithmic Training Bias</td>
+                            <td class="p-4 align-top">Model is optimized for overall accuracy, leading it to favor the most common diagnosis (atherosclerosis) and ignore rare exceptions.</td>
+                            <td class="p-4 align-top">The algorithm becomes statistically and functionally blind to SCAD, programmed to achieve high performance by ignoring the rare but life-threatening case.</td>
+                        </tr>
+                        <tr class="bias-table-row">
+                            <td class="p-4 font-bold align-top">Clinical Deployment Bias</td>
+                            <td class="p-4 align-top">A clinician receives an AI-generated report that carries a "veneer of objectivity," influencing their decision-making.</td>
+                            <td class="p-4 align-top">An AI confidently misclassifies a SCAD case as "mild atherosclerosis," leading to inappropriate treatment and potential iatrogenic harm. The misdiagnosis is automated and scaled.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        
+            <!-- The Path Forward Section -->
+            <div class="mt-24 text-center">
+                <h3 class="text-3xl font-bold text-center mb-12">Navigating the Future: The Path to a Responsible AI</h3>
+                <div class="grid md:grid-cols-3 gap-8 text-left">
+                    <div class="bg-gray-800 p-6 rounded-lg text-center">
+                        <div class="flex justify-center mb-4">
+                            <svg class="w-12 h-12 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.653-.084-1.284-.24-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.653.084-1.284.24-1.857m10.5-5.991a3.375 3.375 0 00-6.75 0V11a3.375 3.375 0 006.75 0V4.143zM7.5 4.143a3.375 3.375 0 00-6.75 0V11a3.375 3.375 0 006.75 0V4.143z" /></svg>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Fair Data</h4>
+                        <p class="text-gray-400">Actively build diverse, high-quality SCAD patient registries, focusing on the inclusion of women and underrepresented groups. The foundation of a fair AI is fair data.</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg text-center">
+                         <div class="flex justify-center mb-4">
+                            <svg class="w-12 h-12 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-14L4 7m0 10l8 4m0-14v10" /></svg>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Transparent Algorithms</h4>
+                        <p class="text-gray-400">Prioritize "Explainable AI" (XAI) that allows clinicians to understand *why* an algorithm made a recommendation, ensuring trust and accountability.</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg text-center">
+                         <div class="flex justify-center mb-4">
+                           <svg class="w-12 h-12 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">The Human in the Loop</h4>
+                        <p class="text-gray-400">Frame AI as a powerful "co-pilot" to augment, not replace, the expert clinician, ensuring data is balanced with wisdom and empathy.</p>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- AI Conclusion -->
+            <div class="mt-24 max-w-4xl mx-auto">
+                <p class="text-lg text-gray-300 italic leading-relaxed">By tackling the difficult case of SCAD correctly, we can forge the tools and best practices necessary to ensure AI is deployed safely and equitably across all of medicine, turning a diagnostic challenge into a blueprint for a more intelligent and equitable future in cardiology.</p>
+            </div>
+        
         </section>
 
-        <!-- P-SCAD Section -->
-        <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
-             <h2 class="text-3xl md:text-4xl font-bold font-heading">Pregnancy-Associated SCAD (P-SCAD)</h2>
-             <p class="mt-4 text-lg text-gray-400">A significant portion of SCAD cases are linked to pregnancy, often presenting with more severe outcomes.</p>
-            <div class="grid md:grid-cols-2 gap-8 mt-12 text-center">
-                <div class="bg-gray-800 p-8 rounded-lg">
-                    <p class="text-6xl mb-4 font-bold gradient-text">70%</p>
-                    <h3 class="text-2xl font-bold">Occur Postpartum</h3>
-                    <p class="text-gray-400 mt-2">The majority of P-SCAD events happen in the first week after delivery.</p>
+        <!-- SCAD Summary Section -->
+        <section class="data-section my-24 md:my-32 max-w-5xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-black font-heading tracking-tighter gradient-text">SCAD at a Glance</h2>
+            <p class="mt-4 text-lg text-gray-400">A summary of the key pathways in SCAD pathogenesis, diagnosis, and management.</p>
+
+            <div class="mt-12 space-y-12">
+                <!-- Pathogenesis -->
+                <div>
+                    <h3 class="text-2xl font-bold bg-green-200 text-green-800 rounded-lg py-2 px-4 inline-block mb-6">SCAD Pathogenesis</h3>
+                    <div class="grid md:grid-cols-3 gap-8 text-center">
+                        <div class="bg-gray-800 p-6 rounded-lg">
+                            <p class="text-4xl mb-3">🧬</p>
+                            <h4 class="text-xl font-bold">Arteriopathy</h4>
+                            <p class="text-gray-400">(eg, Fibromuscular Dysplasia)</p>
+                        </div>
+                        <div class="bg-gray-800 p-6 rounded-lg">
+                            <p class="text-4xl mb-3">↔️</p>
+                            <h4 class="text-xl font-bold">Genetic Factors</h4>
+                        </div>
+                        <div class="bg-gray-800 p-6 rounded-lg">
+                            <p class="text-4xl mb-3">⚡️</p>
+                            <h4 class="text-xl font-bold">Inciting Event</h4>
+                            <p class="text-gray-400">or Trigger</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-gray-800 p-8 rounded-lg">
-                     <p class="text-6xl mb-4 font-bold gradient-text">~30%</p>
-                    <h3 class="text-2xl font-bold">of Pregnancy MIs</h3>
-                    <p class="text-gray-400 mt-2">P-SCAD is a leading cause of heart attacks during or after pregnancy.</p>
+
+                <!-- Diagnosis -->
+                <div>
+                    <h3 class="text-2xl font-bold bg-orange-200 text-orange-800 rounded-lg py-2 px-4 inline-block mb-6">SCAD Diagnosis</h3>
+                    <div class="grid md:grid-cols-3 gap-8 text-center">
+                        <div class="bg-gray-800 p-6 rounded-lg">
+                            <h4 class="text-xl font-bold">Coronary Angiography</h4>
+                            <p class="text-gray-400">Gold Standard</p>
+                        </div>
+                        <div class="bg-gray-800 p-6 rounded-lg">
+                            <h4 class="text-xl font-bold">IVUS/OCT</h4>
+                            <p class="text-gray-400">Improves Detection</p>
+                        </div>
+                        <div class="bg-gray-800 p-6 rounded-lg">
+                            <h4 class="text-xl font-bold">CCTA</h4>
+                            <p class="text-gray-400">For Follow-up</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Management -->
+                <div>
+                    <h3 class="text-2xl font-bold bg-red-200 text-red-800 rounded-lg py-2 px-4 inline-block mb-6">Acute & Chronic Management</h3>
+                     <div class="grid md:grid-cols-3 gap-8 text-center mt-8">
+                        <div class="bg-gray-800 p-6 rounded-lg"><h4 class="text-xl font-bold">Conservative Mgmt</h4></div>
+                        <div class="bg-gray-800 p-6 rounded-lg"><h4 class="text-xl font-bold">Beta Blockers</h4></div>
+                        <div class="bg-gray-800 p-6 rounded-lg"><h4 class="text-xl font-bold">Specialized Clinics</h4></div>
+                        <div class="bg-gray-800 p-6 rounded-lg"><h4 class="text-xl font-bold">Cardiac Rehab</h4></div>
+                        <div class="bg-gray-800 p-6 rounded-lg"><h4 class="text-xl font-bold">Cardiogenic Shock</h4></div>
+                        <div class="bg-gray-800 p-6 rounded-lg"><h4 class="text-xl font-bold">Revascularization</h4></div>
+                    </div>
                 </div>
             </div>
         </section>
-        
-        <!-- Bubble Chart Section -->
-        <section class="data-section my-24 md:my-32 max-w-5xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading">The Landscape of SCAD Triggers</h2>
-            <p class="mt-4 text-lg text-gray-400">This visualization shows the breakdown of precipitating stressors for SCAD patients, highlighting the significant role of emotional and physical triggers.</p>
-            <div id="bubble-chart-container"></div>
+
+        <!-- Conclusion Section -->
+        <section class="data-section my-24 md:my-32 max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-black font-heading tracking-tighter gradient-text">A Call for Awareness</h2>
+            <p class="mt-4 text-lg text-gray-400 leading-relaxed">The data tells a clear story: SCAD is not a rare curiosity but a significant and under-recognized cause of heart attacks, particularly in a demographic that is too often overlooked in cardiology. It is a condition defined by the unexpected—affecting the young, the healthy, and overwhelmingly, women. Moving forward requires a fundamental shift: from dismissing the "atypical" patient to recognizing the unique signature of SCAD. By raising awareness, investing in targeted research, and educating both clinicians and the public, we can ensure that this "unseen attack" is finally brought into the light.</p>
         </section>
 
         <!-- Footer -->
-        <footer class="text-center py-8">
+        <footer class="text-center py-16">
             <p class="text-sm text-gray-500 font-mono">#WIHDN #WIHDNDataStorytellingChallenge #WIHDNWaitingTime</p>
-             <p class="mt-2 text-xs text-gray-600">Data derived from Prakash et al. (2021), Hayes et al. (2018) & Tweet et al. (2018)</p>
+             <p class="mt-2 text-xs text-gray-600">This data story is an entry for the Women’s Data Storytelling Challenge, hosted by WIHDN.</p>
+             <p class="mt-2 text-xs text-gray-600">Data derived from Prakash et al. (2021), Hayes et al. (2018), American College of Cardiology (2025a) & Tweet et al. (2018)</p>
         </footer>
     </main>
 
@@ -265,305 +348,7 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
 
     <!-- Custom JS -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            Chart.register(ChartDataLabels);
-
-            // --- Hero Animation ---
-            gsap.from("#hero-title", { opacity: 0, y: 30, duration: 1, delay: 0.2 });
-            gsap.from("#hero-subtitle", { opacity: 0, y: 30, duration: 1, delay: 0.5 });
-
-            // --- Animate Sections on Scroll ---
-            const sections = document.querySelectorAll('.data-section');
-            sections.forEach(section => {
-                ScrollTrigger.create({
-                    trigger: section,
-                    start: 'top 80%',
-                    once: true,
-                    onEnter: () => {
-                        section.classList.add('is-visible');
-                    }
-                });
-            });
-            
-            // --- Animated Number Counter ---
-            const statElement = document.getElementById('gender-stat');
-            gsap.to(statElement, {
-                textContent: statElement.dataset.value,
-                duration: 2,
-                ease: "power1.inOut",
-                snap: { textContent: 1 },
-                scrollTrigger: {
-                    trigger: statElement,
-                    start: "top 85%",
-                    toggleActions: "play none none none"
-                },
-                onUpdate: function() {
-                    this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent) + '%';
-                }
-            });
-
-            // --- Chart.js Global Options ---
-            const chartTextColor = '#D1D5DB';
-            const chartGridColor = 'rgba(255, 255, 255, 0.1)';
-            const chartFont = { size: 12, family: "'Inter', sans-serif" };
-            const chartMonoFont = { family: "'Roboto Mono', monospace" };
-            Chart.defaults.color = chartTextColor;
-            Chart.defaults.font.family = "'Inter', sans-serif";
-
-            // --- Gender Doughnut Chart ---
-            const genderCtx = document.getElementById('gender-chart').getContext('2d');
-            new Chart(genderCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Women', 'Men'],
-                    datasets: [{
-                        data: [94.6, 5.4],
-                        backgroundColor: ['#ef4444', '#4b5563'],
-                        borderColor: '#111827',
-                        borderWidth: 6,
-                        hoverOffset: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    cutout: '70%',
-                    plugins: {
-                        legend: { 
-                            position: 'bottom', 
-                            labels: { font: {size: 14}, color: chartTextColor } 
-                        },
-                        datalabels: { display: false }
-                    },
-                    animation: {
-                        animateScale: true,
-                        animateRotate: true,
-                        duration: 1500
-                    }
-                }
-            });
-
-            // --- Artery Involvement Chart ---
-            const arteryCtx = document.getElementById('artery-chart').getContext('2d');
-            new Chart(arteryCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['LAD', 'LCx', 'RCA', 'Multivessel'],
-                    datasets: [{
-                        label: 'Affected Artery',
-                        data: [52.1, 29.6, 26.2, 11.5],
-                        backgroundColor: 'rgba(239, 68, 68, 0.6)',
-                        borderColor: '#ef4444',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    scales: {
-                        y: { grid: { color: chartGridColor }, ticks: { font: chartFont, callback: (value) => value + '%' } },
-                        x: { grid: { display: false }, ticks: { font: { ...chartFont, size: 14 } } }
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: true },
-                        datalabels: { display: false }
-                    }
-                }
-            });
-
-            // --- Risk Factor Chart ---
-            const riskFactorCtx = document.getElementById('risk-factor-chart').getContext('2d');
-            new Chart(riskFactorCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Hypertension', 'Hyperlipidemia', 'Smoker', 'Diabetes'],
-                    datasets: [{
-                        label: 'Prevalence',
-                        data: [43.1, 36.6, 15.1, 4.8],
-                        backgroundColor: [
-                            'rgba(239, 68, 68, 0.7)',    // Red
-                            'rgba(249, 115, 22, 0.7)',   // Orange
-                            'rgba(245, 158, 11, 0.7)',  // Amber
-                            'rgba(107, 114, 128, 0.7)'  // Gray
-                        ],
-                        borderColor: ['#ef4444', '#f97316', '#f59e0b', '#6b7280'],
-                        borderWidth: 1
-                    }]
-                },
-                 options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { grid: { color: chartGridColor }, ticks: { display: false } },
-                        y: { grid: { display: false }, ticks: { font: chartFont } }
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: false },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'end',
-                             formatter: (value, context) => context.chart.data.labels[context.dataIndex] + ': ' + value + '%',
-                            color: chartTextColor,
-                            font: { ...chartFont, size: 14, weight: 'bold' }
-                        }
-                    }
-                }
-            });
-            
-            // --- Associated Conditions Chart ---
-            const associatedCtx = document.getElementById('associated-conditions-chart').getContext('2d');
-            new Chart(associatedCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['FMD', 'Migraine', 'Inflammatory', 'Connective Tissue'],
-                    datasets: [{
-                        label: 'Prevalence',
-                        data: [44.2, 38.8, 5.6, 4.9],
-                        backgroundColor: [
-                            'rgba(192, 132, 252, 0.7)', // Purple
-                            'rgba(139, 92, 246, 0.7)',  // Violet
-                            'rgba(99, 102, 241, 0.7)',  // Indigo
-                            'rgba(59, 130, 246, 0.7)'   // Blue
-                        ],
-                        borderColor: ['#c084fc', '#8b5cf6', '#6366f1', '#3b82f6'],
-                        borderWidth: 1
-                    }]
-                },
-                 options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { grid: { color: chartGridColor }, ticks: { display: false } },
-                        y: { grid: { display: false }, ticks: { font: chartFont } }
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: false },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'end',
-                             formatter: (value, context) => context.chart.data.labels[context.dataIndex] + ': ' + value + '%',
-                            color: chartTextColor,
-                            font: { ...chartFont, size: 14, weight: 'bold' }
-                        }
-                    }
-                }
-            });
-
-
-            // --- Recurrence Icon Array ---
-            const recurrenceContainer = document.getElementById('recurrence-array');
-            for (let i = 0; i < 20; i++) {
-                const icon = document.createElement('div');
-                icon.className = `aspect-square rounded ${i < 4 ? 'bg-red-600' : 'bg-gray-600'}`;
-                recurrenceContainer.appendChild(icon);
-            }
-
-            // --- MI Under 50 Icon Array ---
-            const miUnder50Container = document.getElementById('mi-under-50-array');
-            for (let i = 0; i < 100; i++) {
-                const icon = document.createElement('div');
-                icon.className = `aspect-square rounded ${i < 35 ? 'bg-red-600' : 'bg-gray-600'}`;
-                miUnder50Container.appendChild(icon);
-            }
-
-            // --- D3 Bubble Chart ---
-            const bubbleData = {
-                name: "All SCAD Patients (n=436)", value: 436, color: "#6b7280",
-                children: [
-                    { name: "Emotional Stressor", value: 211, color: "#c084fc" },
-                    {
-                        name: "Physical Stressor", value: 125, color: "#f97316",
-                        children: [
-                            { name: "Isometric Exercise", value: 56, color: "#fb923c" },
-                            { name: "Valsalva Strain", value: 46, color: "#fdba74" },
-                            { name: "Other Physical", value: 23, color: "#fed7aa" }
-                        ]
-                    },
-                    { name: "No Known Trigger", value: 100, color: "#a1a1aa" }
-                ]
-            };
-
-            const bubbleContainer = document.getElementById('bubble-chart-container');
-            const width = bubbleContainer.clientWidth;
-            const height = 600;
-
-            const svg = d3.select("#bubble-chart-container").append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .attr("viewBox", [-width / 2, -height / 2, width, height]);
-
-            const root = d3.hierarchy(bubbleData).sum(d => d.value);
-            const pack = d3.pack().size([width - 4, height - 4]).padding(10);
-            const packedRoot = pack(root);
-
-            const simulation = d3.forceSimulation(packedRoot.descendants())
-                .force("link", d3.forceLink(packedRoot.links()).distance(d => d.source.r + d.target.r + 40).strength(0.5))
-                .force("charge", d3.forceManyBody().strength(-50))
-                .force("center", d3.forceCenter(0,0).strength(0.1))
-                .force("collide", d3.forceCollide(d => d.r + 5));
-
-            const link = svg.append("g")
-                .selectAll("line")
-                .data(packedRoot.links())
-                .join("line")
-                .attr("class", "bubble-link");
-
-            const node = svg.append("g")
-                .selectAll("g")
-                .data(packedRoot.descendants())
-                .join("g")
-                .attr("class", "bubble-node")
-                .call(d3.drag()
-                    .on("start", dragstarted)
-                    .on("drag", dragged)
-                    .on("end", dragended));
-
-            node.append("circle")
-                .attr("r", d => d.r)
-                .attr("fill", d => d.data.color || "#ccc");
-
-            node.append("text")
-                .selectAll("tspan")
-                .data(d => {
-                    const name = d.data.name;
-                    const value = d.value;
-                    const total = packedRoot.value;
-                    const percentage = ((value / total) * 100).toFixed(1);
-                    if (d.depth > 0) {
-                        return `${name} (${percentage}%)`.split(/(?=[A-Z][^A-Z])/g);
-                    }
-                    return name.split(/(?=[A-Z][^A-Z])/g);
-                })
-                .join("tspan")
-                .attr("x", 0)
-                .attr("y", (d, i, nodes) => `${i - nodes.length / 2 + 0.8}em`)
-                .text(d => d);
-
-            simulation.on("tick", () => {
-                link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
-                    .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
-                node.attr("transform", d => `translate(${d.x},${d.y})`);
-            });
-
-            function dragstarted(event, d) {
-                if (!event.active) simulation.alphaTarget(0.3).restart();
-                d.fx = d.x; d.fy = d.y;
-            }
-            function dragged(event, d) {
-                d.fx = event.x; d.fy = event.y;
-            }
-            function dragended(event, d) {
-                if (!event.active) simulation.alphaTarget(0);
-                d.fx = null; d.fy = null;
-            }
-        });
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
+
